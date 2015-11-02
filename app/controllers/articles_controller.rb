@@ -25,7 +25,7 @@ class ArticlesController < ApplicationController
     params[:keyword] = ' ' if params[:keyword].nil?
     params[:label] = '' if params[:label].nil?
     params[:type] = 'P' if params[:type].nil?
-    kolURI = 'http://74.71.193.8:8080/robin8/kol.jsp'
+    kolURI = TESTURL
     uri = URI.parse(kolURI)
     res = Net::HTTP.post_form(uri,params)
     @text = ActiveSupport::JSON.decode(res.body)
