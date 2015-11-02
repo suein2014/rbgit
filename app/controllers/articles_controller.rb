@@ -52,7 +52,7 @@ class ArticlesController < ApplicationController
       #获取文章所属类别
       myParams = {}
       myParams[:label] = params[:article][:content]
-      categoryURI = 'http://74.71.193.8:8080/robin8/label.jsp'
+      categoryURI = TESTURL
       uri = URI.parse(categoryURI)
       res = Net::HTTP.post_form(uri,myParams)
       params[:article][:category] = res.body #ActiveSupport::JSON.decode(res.body)
