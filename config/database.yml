@@ -13,20 +13,20 @@ default: &default
   adapter: mysql2
   encoding: utf8
   pool: 5
-  username: robin8admin
-  password: 123456
+  username: 
+  password: 
   socket: /tmp/mysql.sock
 
 development:
   <<: *default
-  database: robin8_new_development
+  database: 
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: robin8_new_test
+  database:
 
 # As with config/secrets.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -49,6 +49,6 @@ test:
 #
 production:
   <<: *default
-  database: robin8_new_production
-  username: robin8_new
-  password: <%= ENV['ROBIN8_NEW_DATABASE_PASSWORD'] %>
+  database:
+  username: 
+  password: 
