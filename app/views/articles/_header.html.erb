@@ -1,0 +1,54 @@
+<nav class="navbar navbar-inverse navbar-fixed-top" style="background-color:#F2F2F2">
+    <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#"><img src="https://static-robin8-staging-com.akamaized.net/assets/robin8-fixedlogo-afa95108a97e40fe5556283fa931aa2ac94bce26c85b179bfe1f38bcebe19be9.png" /></a>
+        </div>
+
+        <div id="navbar" class="navbar-collapse collapse" >
+            <ul class="nav navbar-nav">
+                 <li><a href="#">Weibo</a></li>
+<!--                  <li><a href="#">Wechat</a></li>
+-->
+            </ul>
+        </div>
+
+   </div>
+</nav>
+
+<br/><br/>
+<div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+         <ul class="nav nav-sidebar">
+
+           <li class="active"><a href="#">Overview<span class="sr-only">(current)</span></a></li>
+
+        </ul>
+<br /><br />
+        <ul class="nav nav-sidebar">
+            <li ><a style="color:white;font-size:25px" href="/articles/find">FindKOL</a></li>
+        </ul>
+
+        <br /><br /><br /><br /><br /><br /><br />
+        <% unless params[:keyword].nil? or params[:input].nil?  %>
+        <ul class="nav nav-sidebar">
+<!--            <li >
+                当前查询关键词为：
+            </li>
+            <span style="color:red"><%= params[:keyword] %></span>
+-->
+            <br/><br />
+            <li >
+                当前查询文章内容为：
+            </li>
+            <span style="color:red"><%= params[:input] %></span>
+        </ul>
+        <% end %>
+
+        </div>

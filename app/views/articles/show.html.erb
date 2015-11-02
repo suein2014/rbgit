@@ -1,0 +1,36 @@
+<%= render 'header'%>
+
+<br/><br/><br/>
+<div class="col-sm-7 col-md-9 main">
+
+<p>
+  <strong>Title:</strong>
+  <%= @article.title %>
+</p>
+
+<p>
+  <strong>Keyword:</strong>
+  <%= @article.keyword %>
+</p>
+
+<p>
+  <strong>Content:</strong>
+  <%= @article.content %>
+</p>
+
+<p>
+  <strong>Source:</strong>
+  <%= @article.source %>
+</p>
+
+<p>
+  <strong>Category:</strong>
+  <%= Category.find(@article.category_id).cn_name%>
+</p>
+
+
+<%= link_to 'Edit', edit_article_path(@article) %> |
+<%= link_to 'Back', articles_path %>
+</div>
+
+<%= render 'footer'%>

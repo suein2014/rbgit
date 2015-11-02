@@ -1,0 +1,62 @@
+    <table cellpadding="1" >
+        <thead style="background-color:#145b7d;color:white" >
+            <tr>
+                <th align='center'> 个人</th>
+                <th align='center'>公司</th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td style="vertical-align:text-top">
+            <table class="table table-striped" style="table-layout:fixed;word-break:break-all;width:500px">
+              <thead style="color:white">
+                <tr class="info" style="color:black">
+                  <th width＝“40%”>name</th>
+                  <th width＝“10%”>image </th>
+                  <th width＝“10%”>uid</th>
+                  <th width＝“40%”>location</th>
+
+                </tr>
+              </thead>
+
+              <tbody>
+                <% @text['P'].each do |v| %>
+                  <tr class="<%= cycle('white','info') %>">
+                    <td><a target="_blank" href="http://weibo.com/<%=v['id']%>"><%= v['name'] %></a></td>
+                    <td><a target="_blank" href="http://weibo.com/<%=v['id']%>"><img src ="<%= v['imgloc']%> " /> </a></td>
+                    <td ><a target="_blank" href="http://weibo.com/<%=v['id']%>"> <%= v['id'] %> </a></td>
+                    <td><%= v['location'] %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+
+            </table>
+        </td>
+        <td style="vertical-align:text-top">
+            <table class="table table-striped" style="table-layout:fixed;word-break:break-all;width:400px">
+              <thead style="color:white">
+                <tr class="success" style="color:black">
+                  <th width＝“40%”>name</th>
+                  <th width＝“10%”>image </th>
+                  <th width＝“10%”>uid</th>
+
+                </tr>
+              </thead>
+
+              <tbody>
+                <% @text['C'].each do |v| %>
+                  <tr class="<%= cycle('active','success') %>">
+                    <td><a target="_blank" href="http://weibo.com/<%=v['id']%>"><%= v['name'] %></a></td>
+                    <td><a target="_blank" href="http://weibo.com/<%=v['id']%>"><img src ="<%= v['imgloc']%> " /> </a></td>
+                    <td ><a target="_blank" href="http://weibo.com/<%=v['id']%>"> <%= v['id'] %> </a></td>
+
+                  </tr>
+                <% end %>
+              </tbody>
+
+            </table>
+        </td>
+
+    </tr>
+</tbody>
+</table>

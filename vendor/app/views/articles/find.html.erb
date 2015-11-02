@@ -1,0 +1,72 @@
+<%= render 'header'%>
+
+<div class="col-sm-7 col-md-9 main">
+    <h2>FindKOL </h2>
+
+<!--   <button class="btn btn-primary btn-lg" data-toggle="modal"
+   data-target="#myModal">
+   开始演示模态框
+</button>
+-->
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+   aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close"
+               data-dismiss="modal" aria-hidden="true">
+                  &times;
+            </button>
+            <h4 class="modal-title" id="myModalLabel">
+               添加新文章
+            </h4>
+         </div>
+         <div class="modal-body">
+             <%= form_for(@article) do |f| %>
+              <div class="field">
+                  <%= f.label :'标题 * :' %><br/>
+                  <%= f.text_field :title ,class:"form-control"%>
+             </div>
+              <div class="field">
+                  <%= f.label :'文章文本:' %><br/>
+                  <%= f.text_area :content ,rows:"10",class:"form-control" %>
+             </div>
+              <div class="field">
+                  <%= f.label :'关键词:' %><br/>
+                  <%= f.text_field :keyword ,class:"form-control", rows:"3" %>
+             </div>
+              <div class="field">
+                  <%= f.label :'媒介:' %><br/>
+                  <%= f.radio_button  :source ,1,:checked=>true%> weibo
+<!--              <%= f.radio_button :source ,2,:class=>"disabled" %> weichat -->
+             </div>
+
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-default"
+               data-dismiss="modal">关闭
+            </button>
+
+             <%= f.submit '提交',:class=>"btn btn-primary"%>
+
+         </div>
+           <% end %>
+      </div><!-- /.modal-content -->
+</div><!-- /.modal -->
+</div>
+
+</br>
+<button class="btn btn-primary btn-lg" data-toggle="modal"
+   data-target="#myModal"> +添加新的文章内容 </button>
+</br></br></br></br>
+        <%=form_tag('/articles/list') do %>
+        <label>或者选择已经添加的文章:</label>
+          <%= select_tag 'input', options_for_select(@articles.map{|a| [a.title,a.content,{'keyword'=>a.keyword}]}),:onchange=>"javascript: this.form.submit();",:class=>"form-control"  %>
+         <% end %>
+
+
+</div>
+
+<%= render 'footer'%>

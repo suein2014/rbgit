@@ -1,0 +1,36 @@
+<%= render 'header'%>
+
+<br/><br/><br/>
+<div class="col-sm-7 col-md-9 main">
+<table class="table table-striped" >
+  <thead>
+    <tr>
+      <th>Title标题</th>
+      <th>Keyword关键词</th>
+      <th>Content内容</th>
+      <th>Source来源</th>
+	  <th>Category分类</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @articles.each do |article| %>
+      <tr>
+        <td><%= article.title %></td>
+        <td><%= article.keyword %></td>
+        <td><%= article.content %></td>
+        <td><%= article.source %></td>
+		<td><%= article.category_id %></td>
+        <td><%= link_to 'Show', article %></td>
+        <td><%= link_to 'Edit', edit_article_path(article) %></td>
+        <td><%= link_to 'Destroy', article, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+</div>
+
+<%= render 'footer'%>

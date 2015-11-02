@@ -1,0 +1,12 @@
+<form name="forDirect" onload="pageload" action="/articles/list" method="post">
+    <input type="hidden" name="title" value="<%=params['article']['title']%>" />
+	<input type="hidden" name="keyword" value="<%=params['article']['keyword']%>" />
+    <input type="hidden" name="input" value="<%=params['article']['content']%>" />
+	<input type="hidden" name="label" value="<%= params['article']['category']%>" />
+</form>
+
+<script type="text/javascript">
+$(document).ready(function(){
+    setTimeout(document.forDirect.submit(),5);
+})
+</script>

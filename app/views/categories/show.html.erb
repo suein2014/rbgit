@@ -1,0 +1,22 @@
+<%= render 'header'%>
+
+
+<div class="col-sm-7 col-md-9 main">
+
+
+<p>
+  <strong>Name:</strong>
+  <%= @category.name %>
+</p>
+
+<p>
+  <strong>Cn name:</strong>
+  <%= @category.cn_name %>
+</p>
+
+<%= link_to 'Edit', edit_category_path(@category) %> |
+<%= link_to 'Back', categories_path %>
+
+</div>
+
+<%= render 'footer'%>
