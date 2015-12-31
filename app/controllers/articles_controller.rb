@@ -14,13 +14,13 @@ class ArticlesController < ApplicationController
   
  
   def weibo_good_users
-    weibo_users_file="/Users/edisonzhao1/rubywork/robin8_new/weibo_good_users.txt"
+    weibo_users_file=""
     file_line2array(weibo_users_file)
   end
   
   
   def wechat_good_users
-    wechat_users_file="/Users/edisonzhao1/rubywork/robin8_new/wechat_good_users.txt"
+    wechat_users_file=""
     file_line2array(wechat_users_file)
   end
   
@@ -202,7 +202,7 @@ class ArticlesController < ApplicationController
   
   
   private def get_file_full_path(filename)
-    filedir="/Users/edisonzhao1/rubywork/robin8_new/"
+    filedir=""
     res = filedir + filename
   end
   
@@ -245,12 +245,12 @@ class ArticlesController < ApplicationController
   end
 
   private def get_weibo_score_from_file(uid)
-      weibo_score_file="/Users/edisonzhao1/rubywork/robin8_new/weibo_score.txt"
+      weibo_score_file="t"
       get_score_by_id_from_file(weibo_score_file,uid)
   end
 
   private def get_wechat_score_from_file(wechat_id)
-      wechat_score_file="/Users/edisonzhao1/rubywork/robin8_new/wechat_score.txt"
+      wechat_score_file=""
       get_score_by_id_from_file(wechat_score_file,wechat_id)
   end
   
