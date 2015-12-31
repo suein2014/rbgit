@@ -1,7 +1,6 @@
 class ArticlesController < ApplicationController
   before_action :set_article, only: [:show, :edit, :update, :destroy]
   skip_before_action :verify_authenticity_token
-  
 
 
   # GET /articles
@@ -300,6 +299,8 @@ class ArticlesController < ApplicationController
 
     @arr_weibo  = weibo_good_users
     @arr_wechat = wechat_good_users
+    
+    @kolApiIp = @@serverIp
     
     
     if(params[:article_id])
