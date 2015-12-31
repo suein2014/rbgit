@@ -2,7 +2,6 @@ class ArticlesController < ApplicationController
   before_action :set_article, only: [:show, :edit, :update, :destroy]
   skip_before_action :verify_authenticity_token
 
-
   # GET /articles
   # GET /articles.json
   def index
@@ -346,7 +345,7 @@ class ArticlesController < ApplicationController
       #获取文章所属类别
       myParams = {}
       myParams[:label] = params[:article][:content]
-      categoryURI = 'http://#{@@apiIp}:8080/robin8/label.jsp'
+      categoryURI = "http://#{@@apiIp}:8080/robin8/label.jsp"
       uri = URI.parse(categoryURI)
       res = Net::HTTP.post_form(uri,myParams)
       category = ActiveSupport::JSON.decode(res.body)
