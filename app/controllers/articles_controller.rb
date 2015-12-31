@@ -1,6 +1,8 @@
 class ArticlesController < ApplicationController
   before_action :set_article, only: [:show, :edit, :update, :destroy]
   skip_before_action :verify_authenticity_token
+  
+
 
   # GET /articles
   # GET /articles.json
@@ -14,13 +16,13 @@ class ArticlesController < ApplicationController
   
  
   def weibo_good_users
-    weibo_users_file=""
+    weibo_users_file="#{ @@defaultFileDir}weibo_good_users.txt"
     file_line2array(weibo_users_file)
   end
   
   
   def wechat_good_users
-    wechat_users_file=""
+    wechat_users_file="#{ @@defaultFileDir}wechat_good_users.txt"
     file_line2array(wechat_users_file)
   end
   
@@ -119,6 +121,8 @@ class ArticlesController < ApplicationController
   def top
     filename="wechat_kol_top_by_total.txt"
     topfile = get_file_full_path(filename)
+    
+    @kolApiIp = @@serverIp
    
     if params[:category_id]
        category_info = Category.where('`id`= ? ',params[:category_id])
@@ -202,7 +206,7 @@ class ArticlesController < ApplicationController
   
   
   private def get_file_full_path(filename)
-    filedir=""
+    filedir= @@defaultFileDir
     res = filedir + filename
   end
   
@@ -245,12 +249,12 @@ class ArticlesController < ApplicationController
   end
 
   private def get_weibo_score_from_file(uid)
-      weibo_score_file="t"
+      weibo_score_file="#{ @@defaultFileDir}weibo_score.txt"
       get_score_by_id_from_file(weibo_score_file,uid)
   end
 
   private def get_wechat_score_from_file(wechat_id)
-      wechat_score_file=""
+      wechat_score_file="#{ @@defaultFileDir}wechat_score.txt"
       get_score_by_id_from_file(wechat_score_file,wechat_id)
   end
   
@@ -313,7 +317,7 @@ class ArticlesController < ApplicationController
     params[:keyword] = ' ' if params[:keyword].nil?
     params[:label] = '' if params[:label].nil?
     params[:type] = 'P' if params[:type].nil?
-    kolURI = ''
+    kolURI = "http://#{@@apiIp}:8080/robin8/kol.jsp"
     uri = URI.parse(kolURI)
     res = Net::HTTP.post_form(uri,params)
     @text = ActiveSupport::JSON.decode(res.body)
@@ -341,7 +345,7 @@ class ArticlesController < ApplicationController
       #获取文章所属类别
       myParams = {}
       myParams[:label] = params[:article][:content]
-      categoryURI = ''
+      categoryURI = 'http://#{@@apiIp}:8080/robin8/label.jsp'
       uri = URI.parse(categoryURI)
       res = Net::HTTP.post_form(uri,myParams)
       category = ActiveSupport::JSON.decode(res.body)
@@ -411,4 +415,6 @@ class ArticlesController < ApplicationController
     def article_params
       params.require(:article).permit(:title, :content, :keyword,:source,:category_id)
     end
+
+    
 end
