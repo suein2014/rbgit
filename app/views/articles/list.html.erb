@@ -40,8 +40,8 @@ $(function () { $("[data-toggle='tooltip']").tooltip(); });
 /***********************  画 score 分数图 BEGIN   ******************************/
 
 
-function show_score(score_id, score_type, score_username){
-	popWin.showWin('400','350','Inclination for user: <span class="text-muted" style="color:red;display:block;width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" >' + score_username + "</span>","http://74.71.193.8:3000/articles/score?id="+score_id+"&type="+score_type);
+function show_score(score_id, score_type, score_username,apiIp){
+	popWin.showWin('400','350','Inclination for user: <span class="text-muted" style="color:red;display:block;width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" >' + score_username + "</span>","http://"+apiIp+":3000/articles/score?id="+score_id+"&type="+score_type);
 }
 
 /*
