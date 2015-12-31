@@ -13,8 +13,8 @@ default: &default
   adapter: mysql2
   encoding: utf8
   pool: 5
-  username: robin8admin
-  password: 123456
+  username: 
+  password: 
   socket: /tmp/mysql.sock
 
 development:
@@ -49,6 +49,6 @@ test:
 #
 production:
   <<: *default
-  database: robin8_new_production
-  username: robin8_new
-  password: <%= ENV['ROBIN8_NEW_DATABASE_PASSWORD'] %>
+  database: _production
+  username: 
+  password: <%= ENV['DATABASE_PASSWORD'] %>
