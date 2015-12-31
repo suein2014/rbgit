@@ -313,7 +313,7 @@ class ArticlesController < ApplicationController
     params[:keyword] = ' ' if params[:keyword].nil?
     params[:label] = '' if params[:label].nil?
     params[:type] = 'P' if params[:type].nil?
-    kolURI = 'http://139.196.13.138:8080/robin8/kol.jsp'
+    kolURI = ''
     uri = URI.parse(kolURI)
     res = Net::HTTP.post_form(uri,params)
     @text = ActiveSupport::JSON.decode(res.body)
@@ -341,7 +341,7 @@ class ArticlesController < ApplicationController
       #获取文章所属类别
       myParams = {}
       myParams[:label] = params[:article][:content]
-      categoryURI = 'http://139.196.13.138:8080/robin8/label.jsp'
+      categoryURI = ''
       uri = URI.parse(categoryURI)
       res = Net::HTTP.post_form(uri,myParams)
       category = ActiveSupport::JSON.decode(res.body)
