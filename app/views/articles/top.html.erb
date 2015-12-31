@@ -23,7 +23,7 @@
 					<td>
 						<%= v['name'] %>
 					</td>
-					<td><a class="score_modal" onclick="show_score('<%=v['id']%>','wechat','<%=v['name']%>')" data-toggle="tooltip" data-placement="right" title="点击查看Inclination" score_type="wechat" score_id="<%=v['id']%>" ><img style="width:50px;height:50px" src ="http://img0.imgtn.bdimg.com/it/u=341227208,1868352736&fm=21&gp=0.jpg" />  </a> </td>
+					<td><a class="score_modal" onclick="show_score('<%=v['id']%>','wechat','<%=v['name']%>','<%=@kolApiIp%>')" data-toggle="tooltip" data-placement="right" title="点击查看Inclination" score_type="wechat" score_id="<%=v['id']%>" ><img style="width:50px;height:50px" src ="http://img0.imgtn.bdimg.com/it/u=341227208,1868352736&fm=21&gp=0.jpg" />  </a> </td>
 					
                     <td ><%= v['id'] %> </td>
 					
@@ -54,8 +54,8 @@ $(function () { $("[data-toggle='tooltip']").tooltip(); });
 /***********************  画 score 分数图 BEGIN   ******************************/
 
 
-function show_score(score_id, score_type, score_username){
-	popWin.showWin('400','350','Inclination for user: <span class="text-muted" style="color:red;display:block;width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" >' + score_username + "</span>","http://74.71.193.8:3000/articles/score?id="+score_id+"&type="+score_type);
+function show_score(score_id, score_type, score_username,apiIp){
+	popWin.showWin('400','350','Inclination for user: <span class="text-muted" style="color:red;display:block;width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" >' + score_username + "</span>","http://"+apiIp+":3000/articles/score?id="+score_id+"&type="+score_type);
 }
 
 
