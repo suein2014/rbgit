@@ -1,8 +1,9 @@
     <table cellpadding="1" >
         <thead style="background-color:#145b7d;color:white" >
             <tr>
-                <th align='center'> 个人</th>
-                <th align='center'>公司</th>
+                <th align='center' style="height:30px;font-size:20px"> weibo-个人</th>
+                <th align='center' style="height:30px;font-size:20px">weibo-公司</th>
+				<th align='center' style="height:30px;font-size:20px">wechat</th>
             </tr>
         </thead>
         <tbody>
@@ -12,18 +13,23 @@
               <thead style="color:white">
                 <tr class="info" style="color:black">
                   <th width＝“40%”>name</th>
-                  <th width＝“10%”>image </th>
+                  <th width＝“10%”>avatar </th>
                   <th width＝“10%”>uid</th>
-                  <th width＝“40%”>location</th>
+                  <th width＝“20%”>location</th>
 
                 </tr>
               </thead>
 
               <tbody>
                 <% @text['P'].each do |v| %>
-                  <tr class="<%= cycle('white','info') %>">
-                    <td><a target="_blank" href="http://weibo.com/<%=v['id']%>"><%= v['name'] %></a></td>
-                    <td><a target="_blank" href="http://weibo.com/<%=v['id']%>"><img src ="<%= v['imgloc']%> " /> </a></td>
+				<% if @arr_weibo.include? v['id'] %>
+                 	<tr class="danger hid">
+			    <% else %>
+					<tr class="<%= cycle('white','info') %>">
+				<%end%>
+
+                    <td><a data-toggle="tooltip" data-placement="bottom" title="点击前往微博主页" target="_blank"  href="http://weibo.com/<%=v['id']%>"><%= v['name'] %></a></td>
+                    <td> <a href="/articles/score?id=<%=v['id']%>&type=weibo" target="_blank"><img src ="<%= v['imgloc']%> " /> </a></td>
                     <td ><a target="_blank" href="http://weibo.com/<%=v['id']%>"> <%= v['id'] %> </a></td>
                     <td><%= v['location'] %></td>
                   </tr>
@@ -33,11 +39,11 @@
             </table>
         </td>
         <td style="vertical-align:text-top">
-            <table class="table table-striped" style="table-layout:fixed;word-break:break-all;width:400px">
+            <table  class="table table-striped" style="table-layout:fixed;word-break:break-all;width:400px">
               <thead style="color:white">
                 <tr class="success" style="color:black">
                   <th width＝“40%”>name</th>
-                  <th width＝“10%”>image </th>
+                  <th width＝“10%”>avatar </th>
                   <th width＝“10%”>uid</th>
 
                 </tr>
@@ -45,10 +51,51 @@
 
               <tbody>
                 <% @text['C'].each do |v| %>
-                  <tr class="<%= cycle('active','success') %>">
+				<% if @arr_weibo.include? v['id'] %>
+                 	<tr class="danger hid">
+			    <% else %>
+					<tr class="<%= cycle('active','success') %>">
+				<%end%>
+                  
                     <td><a target="_blank" href="http://weibo.com/<%=v['id']%>"><%= v['name'] %></a></td>
-                    <td><a target="_blank" href="http://weibo.com/<%=v['id']%>"><img src ="<%= v['imgloc']%> " /> </a></td>
+					<td><a href="/articles/score?id=<%=v['id']%>&type=weibo" target="_blank" ><img src ="<%= v['imgloc']%> " /> </a></td>
                     <td ><a target="_blank" href="http://weibo.com/<%=v['id']%>"> <%= v['id'] %> </a></td>
+
+                  </tr>
+                <% end %>
+              </tbody>
+
+            </table>
+        </td>
+		
+        <td style="vertical-align:text-top">
+            <table class="table table-striped" style="table-layout:fixed;word-break:break-all;width:400px">
+              <thead style="color:white">
+                <tr class="warning" style="color:black">
+                  <th width＝“40%”>name</th>
+                  <th width＝“10%”>avatar </th>
+                  <th width＝“10%”>wechat_id</th>
+				   <th width＝“10%”>average_pageview</th>
+
+                </tr>
+              </thead>
+
+              <tbody>
+                <% @text['W'].each do |v| %>
+				<% if @arr_wechat.include? v['id'] %>
+                 	<tr class="danger  hid">
+			    <% else %>
+					<tr class="<%= cycle('white','warning') %>">
+				<%end%>
+                    <td>
+						<!--<a  class="score_modal" onclick="show_score('<%=v['id']%>','wechat','<%=v['name']%>')" data-toggle="tooltip" data-placement="right" title="点击查看Inclination" score_type="wechat" score_id="<%=v['id']%>"   score_username="<%= v['name']%>" > <%= v['name'] %> </a>  -->
+						<%= v['name'] %>
+					</td>
+                    <!--<td> <a data-toggle="tooltip" data-placement="right" title="点击查看Inclination" href="/articles/score?id=<%=v['id']%>&type=wechat" target="_blank"> <img style="width:50px;height:50px" src ="http://img0.imgtn.bdimg.com/it/u=341227208,1868352736&fm=21&gp=0.jpg" /> </a></td> -->
+					<td> <a class="score_modal" onclick="show_score('<%=v['id']%>','wechat','<%=v['name']%>')" data-toggle="tooltip" data-placement="right" title="点击查看Inclination" score_type="wechat" score_id="<%=v['id']%>" > <img style="width:50px;height:50px" src ="http://img0.imgtn.bdimg.com/it/u=341227208,1868352736&fm=21&gp=0.jpg" /> </a></td>
+					
+                    <td ><%= v['id'] %> </td>
+					<td ><%= v['pageview'] %> </td>
 
                   </tr>
                 <% end %>
@@ -60,3 +107,5 @@
     </tr>
 </tbody>
 </table>
+
+

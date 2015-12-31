@@ -5,6 +5,9 @@ gem 'therubyracer'
 gem 'less-rails'
 gem 'twitter-bootstrap-rails', :git=>'git://github.com/seyhunak/twitter-bootstrap-rails.git'
 
+gem 'dalli'
+
+
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.0'

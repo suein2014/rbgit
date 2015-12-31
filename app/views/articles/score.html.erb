@@ -1,0 +1,244 @@
+<% if @scores_by_id.nil? %>
+	<h2 class="sub-header">  Opps! there's no data for user:<span style="color:red"><%=params[:id]%></span> right now. </h2>
+
+<% else %>
+<input class="canvas_values" type="hidden" width="400" height="300" 
+		<% $num=0 %>
+		<%= @scores_by_id.each do |i,m| %>
+				<% if i && m %>
+					<% $num+=1; %> 
+					<%="name_#{$num}=#{i.to_s}" %>  
+					<%="value_#{$num}=#{m.to_s}" %>
+				<% end %>
+		<% end %> />
+	<canvas id="trails" style="border:1px solid black; background-color:#DCDCDC"  width="400" height="300"></canvas>
+<% end %>
+
+
+
+
+
+
+<script type="text/javascript">
+    // 在Canvas上画
+ 
+ $(document).ready(function(){
+	 var lineLength = 120;
+	 DrawTrails(lineLength);
+ })
+ 
+ 
+ 
+ //总画图函数
+ function DrawTrails(lineLength) {
+        var canvas = document.getElementById("trails");	
+        var context = canvas.getContext("2d");
+
+		var valuesObj = $('.canvas_values');
+		var name_1 = valuesObj.attr('name_1');
+		var name_2 = valuesObj.attr('name_2');
+		var name_3 = valuesObj.attr('name_3');
+		var name_4 = valuesObj.attr('name_4');
+		var name_5 = valuesObj.attr('name_5');
+		var name_6 = valuesObj.attr('name_6');
+		
+		var x_width = valuesObj.attr('width');
+		var y_width = valuesObj.attr('height');	
+		var o_x = x_width/2;
+		var o_y = y_width/2;
+
+
+        context.save();
+        context.translate(x_width/2, y_width/2);
+		
+		createPoint(context,lineLength);
+		CreateCanopyPath(context,lineLength); 
+		
+		
+        //绘制当前路径
+        context.stroke();   
+        context.restore();
+		
+        context.save(); // 在canvas上绘制标题文本
+        context.font = "18px Sans-serif";   // 字号为60px，字体为impact
+        context.fillStyle = "#C0C0C0";  // 将文本填充为蓝色
+        context.textAlign = "center";   // 将文本设为居中对齐
+
+		context.fillText(name_1, o_x, o_y -lineLength-12);
+		context.fillText(name_2, o_x - lineLength/2*1.732-18, o_y-(lineLength/2));
+		context.fillText(name_3, o_x - lineLength/2*1.732-20 ,o_y + lineLength/2+20);
+		context.fillText(name_4, o_x, o_y +lineLength+15);
+		context.fillText(name_5, o_x + lineLength/2*1.732 + 25 , o_y + lineLength/2 +5);
+		context.fillText(name_6,  o_x + lineLength/2*1.732 + 25 , o_y - lineLength/2 +3);	
+		
+        //绘制当前路径 
+        context.restore();
+		
+		
+		
+	}
+
+
+    function CreateCanopyPath(context,lineLength) {
+
+   	var xy_array = new Array();
+   	xy_array = getXY(lineLength);
+   	var y_1 = xy_array[0];
+    	var x_2 = xy_array[1];
+    	var y_2 = xy_array[2];
+    	var x_3 = xy_array[3];
+    	var y_3 = xy_array[4];
+    	var y_4 = xy_array[5];
+    	var x_5 = xy_array[6];
+    	var y_5 = xy_array[7];
+    	var x_6 = xy_array[8];
+    	var y_6 = xy_array[9];
+   	var value_1 = xy_array[10];  //撑满lineLength的数据
+	
+   	var inner_base = lineLength/4; //内框线为外框线的一半
+   	var outter_base = lineLength/2;	
+
+   	 context.beginPath();
+	 
+   	 context.lineWidth=0.1;
+   	 context.lineJoin = "round";
+   	 context.strokeStyle="red";
+
+
+        //底部轴线
+   	 context.moveTo(0, 0);
+        context.lineTo(0, -(lineLength));//中线上部
+   	 context.moveTo(0, 0);
+   	 context.lineTo(-(lineLength/2*1.732), -(lineLength/2)); //左上
+        context.moveTo(0, 0);
+        context.lineTo(-(lineLength/2*1.732), lineLength/2);  //左下
+   	 context.moveTo(0, 0);
+   	 context.lineTo(0, lineLength); //中线下部
+	 
+        context.moveTo(0, 0);
+        context.lineTo(lineLength/2*1.732, lineLength/2); //右下
+        context.moveTo(0, 0);
+        context.lineTo(lineLength/2*1.732, -(lineLength/2));//右上
+   	 context.moveTo(0, 0);
+
+
+   	var valuesObj = $('.canvas_values');
+   	var name_1 = valuesObj.attr('name_1');
+   	var name_2 = valuesObj.attr('name_2');
+   	var name_3 = valuesObj.attr('name_3');
+   	var name_4 = valuesObj.attr('name_4');
+   	var name_5 = valuesObj.attr('name_5');
+   	var name_6 = valuesObj.attr('name_6');
+   console.log(name_1,y_1,name_2,x_2,y_2,name_3,x_3,y_3,name_4,y_4,name_5,x_5,y_5,name_6,x_6,y_6);
+	 
+   	 //填充颜色部分的连线
+   	 context.lineTo(0,y_1); //中上
+   	 context.lineTo(x_2,y_2 ); //左上
+   	 context.lineTo(x_3,y_3); //左下
+   	 context.lineTo(0,y_4); //中下
+   	 context.lineTo(x_5,y_5); //右下
+   	 context.lineTo(x_6,y_6); //左上
+   	 context.lineTo(0,y_1); //回中上，闭环
+	 
+   	 context.shadowBlur=8;
+   	 context.shadowColor="grey";
+	 
+        context.fillStyle = "#FFA500";
+        context.fill();
+  
+        //外部框线
+   	 context.moveTo(0, 0);
+        context.moveTo(0, -(lineLength));//中线上部
+   	 context.lineTo(-(lineLength/2*1.732), -(lineLength/2)); //左上
+        context.lineTo(-(lineLength/2*1.732), lineLength/2);  //左下
+   	 context.lineTo(0, lineLength); //中线下部
+        context.lineTo(lineLength/2*1.732, lineLength/2); //右下
+        context.lineTo(lineLength/2*1.732, -(lineLength/2));//右上 
+   	 context.lineTo(0, -lineLength);//闭环
+	 
+	 
+   	 //内部框线
+   	 context.moveTo(0, 0);
+        context.moveTo(0, -(inner_base*2));//中线上部
+   	 context.lineTo(-(inner_base*1.732), -(inner_base)); //左上
+        context.lineTo(-(inner_base*1.732), inner_base);  //左下
+   	 context.lineTo(0, inner_base*2); //中线下部
+        context.lineTo(inner_base*1.732, inner_base); //右下
+        context.lineTo(inner_base*1.732, -(inner_base));//右上 
+   	 context.lineTo(0, -(inner_base*2));//闭环
+	  
+	 
+   	 context.closePath();
+    }
+
+
+
+   //描坐标点
+   function createPoint(context,lineLength)
+    {
+    	context.beginPath();
+
+   	var xy_array = new Array();
+   	xy_array = getXY(lineLength);
+   	var y_1 = xy_array[0];
+    	var x_2 = xy_array[1];
+    	var y_2 = xy_array[2];
+    	var x_3 = xy_array[3];
+    	var y_3 = xy_array[4];
+    	var y_4 = xy_array[5];
+    	var x_5 = xy_array[6];
+    	var y_5 = xy_array[7];
+    	var x_6 = xy_array[8];
+    	var y_6 = xy_array[9];
+   	var value_1 = xy_array[10];  //撑满lineLength的数据
+	
+   	//描坐标点
+   	context.arc(0,y_1,2,0,2*Math.PI);
+   	context.moveTo(x_2,y_2);
+   	context.arc(x_2,y_2,2,0,2*Math.PI);
+   	context.moveTo(x_3,y_3);
+   	context.arc(x_3,y_3,2,0,2*Math.PI);
+   	context.moveTo(0,y_4);
+   	context.arc(0,y_4,2,0,2*Math.PI);
+   	context.moveTo(x_5,y_5);
+   	context.arc(x_5,y_5,2,0,2*Math.PI);
+   	context.moveTo(x_6,y_6);
+   	context.arc(x_6,y_6,2,0,2*Math.PI);
+
+   	context.fillText(value_1, 0, -lineLength); //写出value_1的y坐标值
+   	context.fillStyle = "#00a6ac";
+   	context.fill();
+   	context.closePath();
+	
+    }
+
+	
+    //计算点的x-y坐标，注意以最大值value_1撑满六边形半径，其他边坐标按比例计算，此为帮助方法
+    function getXY(lineLength){
+    	var valuesObj = $('.canvas_values');
+      	var value_1 = valuesObj.attr('value_1');
+      	var value_2 = valuesObj.attr('value_2');
+      	var value_3 = valuesObj.attr('value_3');
+      	var value_4 = valuesObj.attr('value_4');
+      	var value_5 = valuesObj.attr('value_5');
+      	var value_6 = valuesObj.attr('value_6');
+	
+   	lineLength = lineLength/value_1; //x-y坐标用最大value撑满来计算各点坐标
+    	var y_1 = -(value_1*lineLength);
+    	var x_2 = -(value_2*lineLength/2*1.732);
+    	var y_2 = -(value_2*lineLength/2);
+    	var x_3 = -(value_3*lineLength/2*1.732);
+    	var y_3 = value_3*lineLength/2;
+    	var y_4 = value_4*lineLength;
+    	var x_5 = value_5*lineLength/2*1.732;
+    	var y_5 = value_5*lineLength/2;
+    	var x_6 = value_6*lineLength/2*1.732;
+    	var y_6 = -(value_6*lineLength/2);
+	
+   	var xy_array = new Array(y_1,x_2,y_2,x_3,y_3,y_4,x_5,y_5,x_6,y_6,value_1);
+	
+   	return xy_array;
+	
+    }
+
+    </script>

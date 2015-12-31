@@ -1,0 +1,43 @@
+<%= render 'header'%>
+
+        <div class="col-sm-7 col-md-9 main">
+		  <h2 class="sub-header">test-Wechat排行榜： </h2>
+          <%=form_tag('/articles/top') do %>
+		   <a class="btn btn-warning" style='color:white' role="button"  href="/articles/test?export_csv=1">Export cvs</a><br/>
+		   
+		   <label>选择类别:</label>
+             <%= select_tag 'category_id', options_for_select(Category.all.map {|c| [c.cn_name, c.id]}, params[:category_id]),:onchange=>"javascript:this.form.submit();",:class=>"form-control"  %>
+          <% end %>
+
+            <table class="table table-striped" style="table-layout:fixed;word-break:break-all;width:600px">
+              <thead style="color:white">
+                <tr class="warning" style="color:black">
+                  <th width＝“40%”>name</th>
+                  <th width＝“10%”>avatar </th>
+                  <th width＝“10%”>wechat_id</th>
+
+                </tr>
+              </thead>
+
+              <tbody>
+                <% @kollist.each do |v| %>
+                    <tr class="<%= cycle('white','warning') %>">
+					<td>
+						<%= v['name'] %>
+					</td>
+					<td><img style="width:50px;height:50px" src ="http://img0.imgtn.bdimg.com/it/u=341227208,1868352736&fm=21&gp=0.jpg" /> </td>
+					
+                    <td ><%= v['id'] %> </td>
+					
+
+                  </tr>
+                <% end %>
+              </tbody>
+
+            </table>
+			
+
+        </div>
+
+<%= render 'footer'%>
+

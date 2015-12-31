@@ -1,12 +1,292 @@
 <%= render 'header'%>
 
         <div class="col-sm-7 col-md-9 main">
-
-          <h2 class="sub-header">微博(Weibo)</h2>
-          <div class="table-responsive">
+		  <h2 class="sub-header">搜索结果： 
+		  &nbsp;<input name="filter_siok" class="btn btn-warning" style='color:white' type="button" value="Hide Siok" />
+          </h2>
+		  <div class="table-responsive">
               <%= render 'weibo' %>
           </div>
 
         </div>
 
 <%= render 'footer'%>
+
+<script type="text/javascript">
+
+$("input[name='filter_siok']").click(function(){ 
+    var inputValue = $("input[name='filter_siok']").val();
+	if( inputValue == "Hide Siok"){
+		$(".hid").hide();
+		$("input[name='filter_siok']").val('Show Siok');
+    }else if(inputValue == "Show Siok"){
+		$(".hid").show();
+		$("input[name='filter_siok']").val('Hide Siok');
+    }
+
+})
+
+$(function () { 
+	$('[data-toggle="popover"]').popover();
+	/*$('[data-toggle="popover"]').on('shown.bs.popover', function(){
+		alert("show this");
+	});*/	
+})
+
+$(function () { $("[data-toggle='tooltip']").tooltip(); });
+
+
+
+/***********************  画 score 分数图 BEGIN   ******************************/
+
+
+function show_score(score_id, score_type, score_username){
+	popWin.showWin('400','350','Inclination for user: <span class="text-muted" style="color:red;display:block;width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" >' + score_username + "</span>","http://74.71.193.8:3000/articles/score?id="+score_id+"&type="+score_type);
+}
+
+/*
+$(".score_modal").click(function(){
+ //var lineLength = 120;
+ //DrawTrails(lineLength);
+ //var score_id= $(".score_modal").attr('score_id');
+ //var score_type= $(".score_modal").attr('score_type');
+ //popWin.showWin('500','500',"测试弹层","http://74.71.193.8:3000/articles/score?id="+score_id+"&type="+score_type);
+})
+*/
+
+$(".score_modal").mouseout(function(){
+    $("#mask,#maskTop").fadeOut(function() {
+        $(this).remove();
+
+    });
+})
+
+
+//总画图函数
+function DrawTrails(lineLength) {
+       
+	   var canvas = document.createElement("canvas"); 
+	   //var canvas = document.getElementById("canvas");
+       var context = canvas.getContext("2d");
+	   console.log(context);
+
+	   var score_id= $(".score_modal").attr('score_id');
+	   var score_type= $(".score_modal").attr('score_type');
+	   var x_width = 400;//valuesObj.attr('width');
+	   var y_width = 300;//valuesObj.attr('height');	
+	   
+	   var num = 1;
+	   var nameArr = new Array();
+	   var valueArr = new Array();
+	   $.get('/articles/get_score',{type: score_type,id: score_id, },function(data){
+		   
+		   $.each(data,function(k,v){
+			   
+			   nameArr[num] = k;
+			   valueArr[num] = v;
+			   num++;	
+		   });
+	   	var name_1 = nameArr[1];
+	   	var name_2 = nameArr[2];
+	   	var name_3 = nameArr[3];
+	   	var name_4 = nameArr[4];
+	   	var name_5 = nameArr[5];
+	   	var name_6 = nameArr[6];
+		   
+
+		var o_x = x_width/2;
+		var o_y = y_width/2; 
+
+
+       context.save();
+       context.translate(x_width/2, y_width/2);
+	
+	createPoint(context,lineLength,valueArr);
+	CreateCanopyPath(context,lineLength,valueArr); 
+	
+	
+       //绘制当前路径
+       context.stroke();   
+       context.restore();
+	
+       context.save(); // 在canvas上绘制标题文本
+       context.font = "18px Sans-serif";   // 字号为60px，字体为impact
+       context.fillStyle = "#C0C0C0";  // 将文本填充为蓝色
+       context.textAlign = "center";   // 将文本设为居中对齐
+
+	context.fillText(name_1, o_x, o_y -lineLength-12);
+	context.fillText(name_2, o_x - lineLength/2*1.732-18, o_y-(lineLength/2));
+	context.fillText(name_3, o_x - lineLength/2*1.732-20 ,o_y + lineLength/2+20);
+	context.fillText(name_4, o_x, o_y +lineLength+15);
+	context.fillText(name_5, o_x + lineLength/2*1.732 + 25 , o_y + lineLength/2 +5);
+	context.fillText(name_6,  o_x + lineLength/2*1.732 + 25 , o_y - lineLength/2 +3);	
+	
+       //绘制当前路径 
+       context.restore();
+	
+	},'json')
+	
+}
+
+
+
+
+   function CreateCanopyPath(context,lineLength,valueArr) {
+
+  	var xy_array = new Array();
+  	xy_array = getXY(lineLength,valueArr);
+  	var y_1 = xy_array[0];
+   	var x_2 = xy_array[1];
+   	var y_2 = xy_array[2];
+   	var x_3 = xy_array[3];
+   	var y_3 = xy_array[4];
+   	var y_4 = xy_array[5];
+   	var x_5 = xy_array[6];
+   	var y_5 = xy_array[7];
+   	var x_6 = xy_array[8];
+   	var y_6 = xy_array[9];
+  	var value_1 = xy_array[10];  //撑满lineLength的数据
+
+  	var inner_base = lineLength/4; //内框线为外框线的一半
+  	var outter_base = lineLength/2;	
+
+  	 context.beginPath();
+ 
+  	 context.lineWidth=0.1;
+  	 context.lineJoin = "round";
+  	 context.strokeStyle="red";
+
+
+       //底部轴线
+  	 context.moveTo(0, 0);
+       context.lineTo(0, -(lineLength));//中线上部
+  	 context.moveTo(0, 0);
+  	 context.lineTo(-(lineLength/2*1.732), -(lineLength/2)); //左上
+       context.moveTo(0, 0);
+       context.lineTo(-(lineLength/2*1.732), lineLength/2);  //左下
+  	 context.moveTo(0, 0);
+  	 context.lineTo(0, lineLength); //中线下部
+ 
+       context.moveTo(0, 0);
+       context.lineTo(lineLength/2*1.732, lineLength/2); //右下
+       context.moveTo(0, 0);
+       context.lineTo(lineLength/2*1.732, -(lineLength/2));//右上
+  	 context.moveTo(0, 0);
+
+  //console.log(name_1,y_1,name_2,x_2,y_2,name_3,x_3,y_3,name_4,y_4,name_5,x_5,y_5,name_6,x_6,y_6);
+ 
+  	 //填充颜色部分的连线
+  	 context.lineTo(0,y_1); //中上
+  	 context.lineTo(x_2,y_2 ); //左上
+  	 context.lineTo(x_3,y_3); //左下
+  	 context.lineTo(0,y_4); //中下
+  	 context.lineTo(x_5,y_5); //右下
+  	 context.lineTo(x_6,y_6); //左上
+  	 context.lineTo(0,y_1); //回中上，闭环
+ 
+  	 context.shadowBlur=8;
+  	 context.shadowColor="grey";
+ 
+       context.fillStyle = "#FFA500";
+       context.fill();
+ 
+       //外部框线
+  	 context.moveTo(0, 0);
+       context.moveTo(0, -(lineLength));//中线上部
+  	 context.lineTo(-(lineLength/2*1.732), -(lineLength/2)); //左上
+       context.lineTo(-(lineLength/2*1.732), lineLength/2);  //左下
+  	 context.lineTo(0, lineLength); //中线下部
+       context.lineTo(lineLength/2*1.732, lineLength/2); //右下
+       context.lineTo(lineLength/2*1.732, -(lineLength/2));//右上 
+  	 context.lineTo(0, -lineLength);//闭环
+ 
+ 
+  	 //内部框线
+  	 context.moveTo(0, 0);
+       context.moveTo(0, -(inner_base*2));//中线上部
+  	 context.lineTo(-(inner_base*1.732), -(inner_base)); //左上
+       context.lineTo(-(inner_base*1.732), inner_base);  //左下
+  	 context.lineTo(0, inner_base*2); //中线下部
+       context.lineTo(inner_base*1.732, inner_base); //右下
+       context.lineTo(inner_base*1.732, -(inner_base));//右上 
+  	 context.lineTo(0, -(inner_base*2));//闭环
+  
+ 
+  	 context.closePath();
+   }
+
+
+
+  //描坐标点
+  function createPoint(context,lineLength,valueArr)
+   {
+   	context.beginPath();
+
+  	var xy_array = new Array();
+  	xy_array = getXY(lineLength,valueArr);
+  	var y_1 = xy_array[0];
+   	var x_2 = xy_array[1];
+   	var y_2 = xy_array[2];
+   	var x_3 = xy_array[3];
+   	var y_3 = xy_array[4];
+   	var y_4 = xy_array[5];
+   	var x_5 = xy_array[6];
+   	var y_5 = xy_array[7];
+   	var x_6 = xy_array[8];
+   	var y_6 = xy_array[9];
+  	var value_1 = xy_array[10];  //撑满lineLength的数据
+
+  	//描坐标点
+  	context.arc(0,y_1,2,0,2*Math.PI);
+  	context.moveTo(x_2,y_2);
+  	context.arc(x_2,y_2,2,0,2*Math.PI);
+  	context.moveTo(x_3,y_3);
+  	context.arc(x_3,y_3,2,0,2*Math.PI);
+  	context.moveTo(0,y_4);
+  	context.arc(0,y_4,2,0,2*Math.PI);
+  	context.moveTo(x_5,y_5);
+  	context.arc(x_5,y_5,2,0,2*Math.PI);
+  	context.moveTo(x_6,y_6);
+  	context.arc(x_6,y_6,2,0,2*Math.PI);
+
+  	context.fillText(value_1, 0, -lineLength); //写出value_1的y坐标值
+  	context.fillStyle = "#00a6ac";
+  	context.fill();
+  	context.closePath();
+
+   }
+
+
+   //计算点的x-y坐标，注意以最大值value_1撑满六边形半径，其他边坐标按比例计算，此为帮助方法
+   function getXY(lineLength,valueArr){
+     	var value_1 = valueArr[1];
+     	var value_2 = valueArr[2];
+     	var value_3 = valueArr[3];
+     	var value_4 = valueArr[4];
+     	var value_5 = valueArr[5];
+     	var value_6 = valueArr[6];
+
+  	lineLength = lineLength/value_1; //x-y坐标用最大value撑满来计算各点坐标
+   	var y_1 = -(value_1*lineLength);
+   	var x_2 = -(value_2*lineLength/2*1.732);
+   	var y_2 = -(value_2*lineLength/2);
+   	var x_3 = -(value_3*lineLength/2*1.732);
+   	var y_3 = value_3*lineLength/2;
+   	var y_4 = value_4*lineLength;
+   	var x_5 = value_5*lineLength/2*1.732;
+   	var y_5 = value_5*lineLength/2;
+   	var x_6 = value_6*lineLength/2*1.732;
+   	var y_6 = -(value_6*lineLength/2);
+
+  	var xy_array = new Array(y_1,x_2,y_2,x_3,y_3,y_4,x_5,y_5,x_6,y_6,value_1);
+
+  	return xy_array;
+
+   }
+
+/***********************  画 score 分数图  END  ******************************/
+
+
+
+
+</script>

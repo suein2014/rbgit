@@ -1,6 +1,36 @@
 <%= render 'header'%>
 
 <br/><br/><br/>
+
+
+
+        <div class="col-sm-10 col-md-10 main">
+          <!--<h1 class="page-header">文章列表</h1>-->
+          <div class="row placeholders">
+			  <% @articles.each do |article| %>
+
+			<div class="col-xs-4 col-sm-3 placeholder">
+              <img src="https://static-robin8-staging-com.akamaized.net/assets/release-btn-367a48edd869f6590f8804bb2e2752e1810df31d3defdff962992d05e233c7a5.png" class="img-responsive" alt="Generic placeholder thumbnail">
+              <h4 style="display:block;width:120px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><%= article.title %></h4>
+			  <span class="text-muted" style="display:block;width:120px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">关键词：<%=article.keyword%></span>
+              <span class="text-muted" style="display:block;width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">内容：<%=article.content%></span>
+			  <!--<div style="word-wrap: break-word;">
+			   <p style="display:block;" ><%= article.keyword %></p>
+			  </div>-->
+			  <p>
+				  
+				  <a class="btn btn-success  disabled" style="color:white;" href="#" role="button">智能发布</a> &nbsp;&nbsp;&nbsp;
+				  <a class="btn btn-primary" style="color:white;" href="/articles/<%=article.id%>" role="button">预览</a> &nbsp;&nbsp;&nbsp;
+				  <a class="btn btn-default" href="/articles/<%=article.id%>/edit" role="button">编辑</a>
+			  </p>
+            </div>
+            <%end %>
+			
+         </div>
+
+
+
+<!--
 <div class="col-sm-7 col-md-9 main">
 <table class="table table-striped" >
   <thead>
@@ -32,5 +62,6 @@
 
 <br>
 </div>
+-->
 
 <%= render 'footer'%>

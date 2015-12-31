@@ -12,8 +12,8 @@
 
         <div id="navbar" class="navbar-collapse collapse" >
             <ul class="nav navbar-nav">
-                 <li><a href="#">Weibo</a></li>
-<!--                  <li><a href="#">Wechat</a></li>
+<!--                 <li><a href="#">Weibo</a></li>
+                  <li><a href="#">Wechat</a></li>
 -->
             </ul>
         </div>
@@ -24,25 +24,51 @@
 <br/><br/>
 <div class="container-fluid">
       <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
+        <div class="col-sm-2 col-md-2 sidebar">
          <ul class="nav nav-sidebar">
 
-           <li class="active"><a href="#">Overview<span class="sr-only">(current)</span></a></li>
+           <br/><br/><br/>
+		   <li ><a style="color:white;font-size:22px" href="/articles/overview">Overview</a></li>
+		   <!-- <li class="active"><a href="#">Overview<span class="sr-only">(current)</span></a></li> -->
 
         </ul>
-<br /><br />
+        <br /><br />
         <ul class="nav nav-sidebar">
-            <li ><a style="color:white;font-size:25px" href="/articles/find">FindKOL</a></li>
+            <li ><a style="color:white;font-size:22px;disabled" href="/articles/find">智能发布</a></li>
         </ul>
+		<br /><br />
+        <ul class="nav nav-sidebar">
+            <li ><a style="color:white;font-size:22px" href="/articles/">发布</a></li>
+        </ul>
+		<br /><br />
+        <ul class="nav nav-sidebar">
+            <li ><a style="color:white;font-size:22px" href="/articles/admin">管理</a></li>
+        </ul>
+		<br /><br />
+        <ul class="nav nav-sidebar">
+            <li ><a style="color:white;font-size:22px" href="/articles/top">wechat排行榜</a></li>
+        </ul>
+		<br /><br />
+        <ul class="nav nav-sidebar">
+            <li ><a style="color:white;font-size:22px" href="/articles/topwb">weibo排行榜</a></li>
+        </ul>
+		<br /><br />
+		
 
         <br /><br /><br /><br /><br /><br /><br />
         <% unless params[:keyword].nil? or params[:input].nil?  %>
         <ul class="nav nav-sidebar">
-<!--            <li >
+			
+            <li >
+                当前查询分类为：
+            </li>
+            <span style="color:red"><%= params[:label] %></span>
+			
+            <li >
                 当前查询关键词为：
             </li>
             <span style="color:red"><%= params[:keyword] %></span>
--->
+			
             <br/><br />
             <li >
                 当前查询文章内容为：

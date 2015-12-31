@@ -1,19 +1,34 @@
 Rails.application.routes.draw do
-  
-  resources :categories
 
-  match 'articles/list', via:[:get,:post]
+  get 'articles/admin'
+  
+  
+
+  match 'articles/list', via: [:post,:get]
   get 'articles/find'
+
+  get 'articles/overview'
   get 'articles/new',to: redirect('articles/find')
-  get 'articles/index',to: redirect('articles/find')
+  get 'articles/index'
+  
+  get 'articles/test'
+  get 'articles/score'
+  get 'articles/get_score'
+  get 'articles/spidermap'
+  
+  
+  match 'articles/top', via: [:post,:get]
+  match 'articles/topwb', via: [:post,:get]
   
   resources :articles
+  
+  resources :categories
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-   root 'articles#index'
+   root 'articles#find'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

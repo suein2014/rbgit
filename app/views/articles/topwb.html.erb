@@ -1,0 +1,40 @@
+<%= render 'header'%>
+
+        <div class="col-sm-7 col-md-9 main">
+		  <h2 class="sub-header">Weibo排行榜： </h2>
+          <%=form_tag('/articles/topwb') do %>
+           <label>选择类别:</label>
+             <%= select_tag 'category_id', options_for_select(Category.all.map {|c| [c.cn_name, c.id]}, params[:category_id]),:onchange=>"javascript:this.form.submit();",:class=>"form-control"  %>
+          <% end %>
+
+            <table class="table table-striped" style="table-layout:fixed;word-break:break-all;width:1000px">
+              <thead style="color:white">
+                <tr class="info" style="color:black">
+                  <th width＝“40%”>name</th>
+                  <th width＝“10%”>uid</th>
+                  <th width＝“40%”>weibo_url</th>
+				  <th width＝“10%”>avatar </th>
+
+                </tr>
+              </thead>
+
+              <tbody>
+                <% @kollist.each do |v| %>
+                    <tr class="<%= cycle('white','info') %>">
+
+                    <td><a data-toggle="tooltip" data-placement="bottom" title="点击前往微博主页" target="_blank"  href="http://weibo.com/<%=v['id']%>"><%= v['name'] %></a></td>
+                    <td ><a target="_blank" href="http://weibo.com/<%=v['id']%>"> <%= v['id'] %> </a></td>
+                    <td><a target="_blank" href="http://weibo.com/<%=v['id']%>"> http://weibo.com/<%=v['id']%> </a></td>
+					<td> <a href="/articles/score?id=<%=v['id']%>&type=weibo" target="_blank"><img src ="<%= v['imgloc']%> " /> </a></td>
+					
+
+                  </tr>
+                <% end %>
+              </tbody>
+
+            </table>
+			
+
+        </div>
+
+<%= render 'footer'%>
